@@ -12,8 +12,18 @@ class Program
 {
     static void Main(string[] args)
     {
-        Player player = new Player();
-        // player.OnPlayerDie?.Invoke();
+        Player player = new Player(100);
+        // 이벤트 구독
+        player.OnPlayerDie += GameOver;
+        
+        player.TakeDamage(20);
+        player.TakeDamage(30);
+        player.TakeDamage(50);
+    }
+
+    static void GameOver()
+    {
+        Console.WriteLine("주인공 사망! Game Over!");
     }
 }
 
@@ -31,9 +41,9 @@ class Player : IDamageable
     // 2. 델리게이트 이벤트
     public event PlayerDieHandler OnPlayerDie;
 
-    public Player()
+    public Player(int hp)
     {
-        OnPlayerDie += Die;
+        _hp = hp;
     }
     
     public void Die()
@@ -43,6 +53,13 @@ class Player : IDamageable
 
     public void TakeDamage(int damage)
     {
-        throw new NotImplementedException();
+        _hp -= damage;
+        Console.WriteLine($"{damage} 데미지 / HP: {_hp}");
+
+        if (_hp <= 0)
+        {
+            // 주인공 사망
+            OnPlayerDie?.Invoke();
+        }
     }
 }
