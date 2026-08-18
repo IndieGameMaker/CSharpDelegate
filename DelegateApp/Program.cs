@@ -8,13 +8,17 @@
 // 델리게이트명 변수명 = 함수;
 // public void Sum(int a, int b)
 
+// Action
+// public event 델리게이트 델리게이트유형
+
 class Program
 {
     static void Main(string[] args)
     {
         Player player = new Player(100);
-        // 이벤트 구독
+        // 이벤트 구독 (기초적인 옵저버 패턴)
         player.OnPlayerDie += GameOver;
+        player.OnHpChanged += PlayerDamaged;
         
         player.TakeDamage(20);
         player.TakeDamage(30);
@@ -25,6 +29,11 @@ class Program
     {
         Console.WriteLine("주인공 사망! Game Over!");
     }
+
+    static void PlayerDamaged(int hp)
+    {
+        Console.WriteLine($"HP: {hp}");
+    }
 }
 
 public interface IDamageable
@@ -32,6 +41,11 @@ public interface IDamageable
     void TakeDamage(int damage);
 }
 
+
+// Action 
+// 델리게이트 문법을 간결하게 선언할 수 있는 .NET 내장 델리게이트
+// 반환타입이 없는 델리게이트 : Action
+// 반환타입이 있는 델리게이트 : Action<T> , Action<T, T>, ... 16 파라메터를 지원
 class Player : IDamageable
 {
     // 필드 선언
@@ -40,6 +54,9 @@ class Player : IDamageable
     public delegate void PlayerDieHandler();
     // 2. 델리게이트 이벤트
     public event PlayerDieHandler OnPlayerDie;
+    
+    // Action 문법
+    public event Action<int> OnHpChanged;
 
     public Player(int hp)
     {
@@ -54,8 +71,8 @@ class Player : IDamageable
     public void TakeDamage(int damage)
     {
         _hp -= damage;
-        Console.WriteLine($"{damage} 데미지 / HP: {_hp}");
-
+        OnHpChanged?.Invoke(_hp);
+        
         if (_hp <= 0)
         {
             // 주인공 사망
