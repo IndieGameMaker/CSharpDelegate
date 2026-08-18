@@ -38,6 +38,6 @@ class Program
 
     static void LoggerTime(string msg)
     {
-        Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {msg}]");
+        Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {msg}");
     }
 }
