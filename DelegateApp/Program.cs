@@ -13,16 +13,23 @@ class Program
     static void Main(string[] args)
     {
         Player player = new Player();
-        player.OnPlayerDie?.Invoke();
+        // player.OnPlayerDie?.Invoke();
     }
 }
 
-class Player
+public interface IDamageable
 {
+    void TakeDamage(int damage);
+}
+
+class Player : IDamageable
+{
+    // 필드 선언
+    private int _hp;
     // 1. 델리게이트 선언
     public delegate void PlayerDieHandler();
     // 2. 델리게이트 이벤트
-    public PlayerDieHandler OnPlayerDie;
+    public event PlayerDieHandler OnPlayerDie;
 
     public Player()
     {
@@ -34,4 +41,8 @@ class Player
         Console.WriteLine("Player 사망");
     }
 
+    public void TakeDamage(int damage)
+    {
+        throw new NotImplementedException();
+    }
 }
