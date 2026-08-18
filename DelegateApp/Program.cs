@@ -18,17 +18,26 @@ class Program
     // void ShowHp();
     // void DisplayMana();
     
+    // Delegate Chain
+    
     static void Main(string[] args)
     {
         // 2. 델리게이트 변수에 (메소드)할당
-        LoggerDelegate log = Logger;
-        // 3. 델리게이트 호출
-        log("델리게이트 호출 1");
-        log.Invoke("델리게이트 호출 2");
+        LoggerDelegate? log = null;
+        // 3. 델리게이트 체인
+        log += Logger;
+        log += LoggerTime;
+        
+        log?.Invoke("델리게이트 호출");
     }
 
     static void Logger(string msg)
     {
         Console.WriteLine(msg);
+    }
+
+    static void LoggerTime(string msg)
+    {
+        Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {msg}]");
     }
 }
