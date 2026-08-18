@@ -32,7 +32,7 @@ class Program
 
     static void PlayerDamaged(int hp)
     {
-        Console.WriteLine($"HP: {hp}");
+        Console.WriteLine($"주인공 피격 HP: {hp}");
     }
 }
 
@@ -58,6 +58,8 @@ class Player : IDamageable
     // Action 문법
     public event Action<int> OnHpChanged;
 
+    // Func 문법
+    
     public Player(int hp)
     {
         _hp = hp;
