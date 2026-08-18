@@ -10,40 +10,28 @@
 
 class Program
 {
-    //private delegate (저장할수 있는 함수의 형태);
-    
-    // 1. 델리게이트 선언
-    private delegate void LoggerDelegate(string msg);
-    
-    // void ShowHp();
-    // void DisplayMana();
-    
-    // Delegate Chain
-    
     static void Main(string[] args)
     {
-        // 2. 델리게이트 변수에 (메소드)할당
-        LoggerDelegate? log = null;
-        // 3. 델리게이트 체인
-        log += Logger;
-        log += LoggerTime;
-        
-        log?.Invoke("델리게이트 호출");
-        
-        Console.WriteLine("체이닝 완료");
-        
-        // 4. 델리게이트 체인 해제
-        log -= LoggerTime;
-        log?.Invoke("체인 해제된 델리게이트");
+        Player player = new Player();
+        player.OnPlayerDie?.Invoke();
+    }
+}
+
+class Player
+{
+    // 1. 델리게이트 선언
+    public delegate void PlayerDieHandler();
+    // 2. 델리게이트 이벤트
+    public PlayerDieHandler OnPlayerDie;
+
+    public Player()
+    {
+        OnPlayerDie += Die;
+    }
+    
+    public void Die()
+    {
+        Console.WriteLine("Player 사망");
     }
 
-    static void Logger(string msg)
-    {
-        Console.WriteLine(msg);
-    }
-
-    static void LoggerTime(string msg)
-    {
-        Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {msg}");
-    }
 }
