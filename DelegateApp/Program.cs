@@ -29,6 +29,6 @@ class Program
 
     static void Logger(string msg)
     {
-        Console.WriteLine("Hello Delegate");
+        Console.WriteLine(msg);
     }
 }
