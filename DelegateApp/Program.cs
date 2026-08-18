@@ -13,7 +13,7 @@ class Program
     //private delegate (저장할수 있는 함수의 형태);
     
     // 1. 델리게이트 선언
-    private delegate void LoggerDelegate();
+    private delegate void LoggerDelegate(string msg);
     
     // void ShowHp();
     // void DisplayMana();
@@ -23,11 +23,11 @@ class Program
         // 2. 델리게이트 변수에 (메소드)할당
         LoggerDelegate log = Logger;
         // 3. 델리게이트 호출
-        // log();
-        log.Invoke();
+        log("델리게이트 호출 1");
+        log.Invoke("델리게이트 호출 2");
     }
 
-    static void Logger()
+    static void Logger(string msg)
     {
         Console.WriteLine("Hello Delegate");
     }
