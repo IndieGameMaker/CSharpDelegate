@@ -29,6 +29,12 @@ class Program
         log += LoggerTime;
         
         log?.Invoke("델리게이트 호출");
+        
+        Console.WriteLine("체이닝 완료");
+        
+        // 4. 델리게이트 체인 해제
+        log -= LoggerTime;
+        log?.Invoke("체인 해제된 델리게이트");
     }
 
     static void Logger(string msg)
